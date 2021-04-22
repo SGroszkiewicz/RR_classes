@@ -1,0 +1,123 @@
+---
+title: "RMarkdown - presentations"
+author: "Wojciech Hardy; Michał Paliński"
+date: "4/13/2021"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+# We start with _ioslides_
+
+## The basics | `output: ioslides_presentation`
+
+- For details and more options see [The Definitive Guide](https://bookdown.org/yihui/rmarkdown/ioslides-presentation.html)
+
+- Remember that you can insert code chunks in all formats.
+
+- YAML info constitutes the first main slide.
+
+- Two hashes and a title (`## The basics of slides`) create a new slide (like the one you're reading now)
+
+- Single hash creates a section slide (`# Section 1`)
+
+# Section 1
+
+## Sections... | they have subtitles sometimes
+
+Adding a pipe `|` symbol in the slide title allows you to create subtitles.
+
+e.g. `Sections... | they have subtitles sometimes`
+
+## Display modes
+
+ioslides provides several shortcuts for handy display modes.
+
+- `f` - fullscreen mode
+- `w` - widescreen mode
+- `o` - overview mode
+- `h` - code highlight mode (I'm not sure what that's supposed to do...)
+- `p` - show presenter notes
+
+## Incremental bullets
+
+> - Use `incremental: true` option in YAML to have the bullet points appear one by one.
+
+> - Alternatively, you can do this only for a specific list.
+
+> - to achieve this, write "`> -`" instead of just "`-`"
+
+## Manipulating the presentation size {.smaller}
+
+- Use "`widescreen: true`" to toggle widescreen on by default.
+
+- Use "`smaller: true`" to keep the font size small.
+
+- Alternatively, you can put "`{.smaller}`" right after your slide header to apply this only locally (like in this slide)
+
+## Other options worth mentioning: {.smaller .build data-background=img/background.jpg}
+
+- "`transition: slower/faster/_numeric value_`" to modify slide transitions.
+
+- "`{.build}`" after a slide header, to make the content appear gradually (like here).
+
+- "`data-background:`" attribute to modify the background image ([photo source](https://www.pexels.com/photo/beach-2833563/))
+
+- CSS styles still work ("`css: styles.css`")
+
+- "`logo:` for a logo image" 
+
+- <div class="blue2">Use html syntax with specific classes for more options, e.g. to color stuff</div> ("`<div class="red2"> text </div>`")
+
+- You can add notes using "`<div class="notes">These are some hidden notes for the presenter (they can include MD as well)</div>`" and then view them using `p` or adding "`?presentme=true`" to the URL (try both to see the outcomes).
+
+<div class="notes">These are some hidden notes for the presenter (they can include MD as well)</div>
+
+# Other popular formats
+
+## Slidy
+
+[A `Slidy` presentation](https://bookdown.org/yihui/rmarkdown/slidy-presentation.html)
+
+Let's modify the output to slidy and see what happens.
+
+> - Lots of stuff stopped working.
+
+> - But of course we have new options as well.
+
+> - Press `c` for a table of contents
+
+> - Press `f` to toggle the footer
+
+> - Press `a` to display all slides one after another
+
+> - Press `s` (**s**maller) or `b` (**b**igger) to change font size
+
+> - We can also add stuff to the footer like the countdown clock, or info:
+
+> - "`duration: 15`"
+
+> - "`footer: "Presentation for the RR course."`"
+
+## Beamer and Powerpoint
+
+[A `Beamer` presentation](https://bookdown.org/yihui/rmarkdown/beamer-presentation.html)
+
+Beamer uses LaTeX, so again you can use LaTeX syntax here.
+
+- Some nice themes here, try:
+
+`output:`  
+`  beamer_presentation:`  
+`    theme: "AnnArbor"`  
+`    colortheme: "dolphin"`  
+`    fonttheme: "structurebold"`
+    
+You can also check `powerpoint_presentation`
+
+# Exercise 3
+
+## Exercise 3
+
+Take what you've created for Exercises 1 (and/or) 2, and turn it into a presentation. You can pick the style and format, but try modifying some of the defaults (e.g. the progression, the display, font size, backgrounds, etc.)

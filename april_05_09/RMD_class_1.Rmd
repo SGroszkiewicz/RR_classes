@@ -2,11 +2,16 @@
 title: "(R)Markdown"
 author: "Wojciech Hardy; Michał Paliński"
 date: "3/21/2021"
-output: html_document
+output: 
+  html_document:
+    toc: true
+    theme: united
+    highlight: tango
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+# knitr::opts_knit$set(base.dir = "Plots")
 library(reticulate)
 library(chron)
 #py_install("pandas")
@@ -74,7 +79,7 @@ Subscripts can be done like so: `H~2~O` H~2~O
 
 ---
 
-# Lists
+# Lists {.tabset}
 
 ## Ordered
 
@@ -365,7 +370,7 @@ With
 
 ---
 
-# EXERCISE 1
+# EXERCISE 1§
 
 Pick a TV show that had its premieres on TV and thus has some viewership numbers reported on Wikipedia.
 E.g. [Suits](https://en.wikipedia.org/wiki/List_of_Suits_episodes) (see table just above the References)

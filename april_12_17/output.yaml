@@ -1,0 +1,7 @@
+html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+    toc_depth: 2
+    theme: united
+    highlight: pygments

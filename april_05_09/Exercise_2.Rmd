@@ -3,15 +3,24 @@ title: "Exercise 2"
 author: "Wojciech Hardy; Michał Paliński"
 date: "3/21/2021"
 output: html_document
+params:
+  season:
+    label: "Season"
+    value: 1
+    input: slider
+    min: 1
+    max: 8
+    step: 1
+    sep: "" 
 ---
 
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
-load("Data/season_1.RData")
+load(paste0("Data/season_", params$season,".RData"))
 ```
 
-# Game of Thrones - Season 1 summary in numbers
+# Game of Thrones - Season `r params$season` summary in numbers
 
 ### __(*Warning:* spoilers ahead)__
 

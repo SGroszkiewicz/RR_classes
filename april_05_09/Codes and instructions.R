@@ -2,7 +2,7 @@
 # Reproducible Research 2021
 # Wojciech Hardy & Michal Palinski
 
-setwd("")
+setwd("/Users/michalpalinski/Desktop/RR_classes/april_05_09")
 
 # We need to load the necessary packages if we're operating through an R script.
 

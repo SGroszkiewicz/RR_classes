@@ -1,0 +1,5 @@
+html_document:
+toc: true
+toc_float: false
+number_sections: true
+toc_depth: 2
