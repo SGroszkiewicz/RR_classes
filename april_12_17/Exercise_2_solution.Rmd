@@ -12,6 +12,11 @@ params:
   printcode:
     label: "Display Code:"
     value: TRUE
+  color: 
+    label: "Plot color"
+    value: "red"
+    input: select
+    choices: ["red", "black", "blue", "green"]
 ---
 
     
@@ -54,7 +59,7 @@ The most popular episode of the season was `r season_data[season_data$viewers ==
 You can see how the viewership of the episodes changed in Figure 1.
 
 ```{r viewers_plot}
-plot(season_data$viewers, type="l", col="red", lwd=5, xlab = "Episode number", ylab = "1st day TV viewers in the US (millions)")
+plot(season_data$viewers, type="l", col=params$color, lwd=5, xlab = "Episode number", ylab = "1st day TV viewers in the US (millions)")
 ```
 
 ***
