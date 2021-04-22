@@ -15,16 +15,13 @@ params:
   color: 
     label: "Plot color"
     value: "red"
-    input: select
+    input: radio
     choices: ["red", "black", "blue", "green"]
 ---
 
-    
-
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
-load(paste0("Data/season_", params$season, ".RData"))
+load(paste0("../april_05_09/Data/season_", params$season, ".RData"))
 ```
 
 ```{r, include=F}
