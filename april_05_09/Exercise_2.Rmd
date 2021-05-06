@@ -11,7 +11,7 @@ params:
     min: 1
     max: 8
     step: 1
-    sep: "" 
+    sep: ""
 ---
 
 

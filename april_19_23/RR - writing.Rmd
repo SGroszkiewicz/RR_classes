@@ -1,0 +1,399 @@
+---
+title: "Reproducible Research"
+subtitle: "How to make your research reproducible"
+author: "Wojciech Hardy; Michał Paliński"
+date: "4/20/2021"
+output: 
+  ioslides_presentation:
+    widescreen: true
+    css: styles.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction | (press _p_ to show the hidden notes)
+
+<div class="notes">Not here - when browsing the rest of the presentation ;)</div>
+
+<font color="white">_“In every project you have at least one other collaborator: future-you. You don’t want future-you to curse past-you”_ - [Hadley Wickham](https://www.r-bloggers.com/2016/05/your-most-valuable-collaborator-future-you/)</font>
+
+
+## General idea
+<div style="float: left; width: 55%;">
+What is the goal of making our work reproducible?
+
+- Returning to your own code after six months.
+</div>
+
+<div style="float: right; width: 40%;">
+<a href="https://xkcd.com/844/"> <img src="https://imgs.xkcd.com/comics/good_code.png" height = 450></img></a>  
+<font size=3>source: xkcd (https://xkcd.com/844/)</font>
+</div>
+
+<div class="notes">This is probably and actually the main (i.e. the most likely to come up) reason to care about your code.
+
+Imagine having worked on ten different things in the meantime, and then having to do something again with your code. If in academia, this can be because of journal _revisions_ or comments after conferences. In business, perhaps it's a project type that comes up only once in a while. Or perhaps you're supposed to teach this to new team members.</div>
+
+## General idea
+<div style="float: left; width: 55%;">
+What is the goal of making our work reproducible?
+
+- Returning to your own code after six months.
+- If you switch jobs, someone might need to take over your projects.
+</div>
+
+<div style="float: right; width: 40%;">
+<a href="https://xkcd.com/844/"> <img src="https://imgs.xkcd.com/comics/good_code.png" height = 450></img></a>  
+<font size=3>source: xkcd (https://xkcd.com/844/)</font>
+</div>
+
+<font size=4>_“Always code as if the guy who ends up maintaining your code will be a violent psychopath who knows where you live.”_  
+- quote by... [someone(?)](https://stackoverflow.com/questions/876089/who-wrote-this-programing-saying-always-code-as-if-the-guy-who-ends-up-maintai)</font>
+
+<div class="notes">The employer should actually care about this, but not always does. Sometimes there's not enough time provided to create proper documentation and a clean, well thought out code. Other than trying to get the necessary time or writing everything perfectly on the first try, not much can be done then.
+</div>
+
+## General idea
+<div style="float: left; width: 55%;">
+What is the goal of making our work reproducible?
+
+- Returning to your own code after six months.
+- If you switch jobs, someone might need to take over your projects.
+- Your team-members.
+- Other researchers verifying or looking to replicate your research.
+- Collaborators who do not know you (e.g. in open-source).
+</div>
+
+<div style="float: right; width: 40%;">
+<a href="https://xkcd.com/844/"> <img src="https://imgs.xkcd.com/comics/good_code.png" height = 450></img></a>  
+<font size=3>source: xkcd (https://xkcd.com/844/)</font>
+</div>
+
+<div class="notes">
+In any case, the code and documentation should be enough to allow people to understand what is going on, why, how to contribute if possible and how to use your code.
+</div>
+
+## Big question: who's going to read it?
+
+Documentation can serve different purposes.
+
+- is it mostly about instructions for use?
+
+- or is it mostly about replication and verification?
+
+- perhaps it's about further development and contributing?
+
+<div class="notes">
+Depending on what you write and where you write it (private firm? academia? open-source for hobbyistic reasons?) you might want to stylise your documentation and comments accordingly.
+
+It's good to have comments that explain the reasoning behind the code in any case, but documentation might be oriented towards users or collaborators or other researchers, etc.
+
+Sometimes documentation is not necessary because an article might document the whole process. Not all of the issues raised in further slides apply to all contexts.
+</div>
+
+## In short
+
+- create code that is easy to read, use, understand and modify.
+- create documentation so it's clear what you did, why you did it, what the outcome is supposed to be and what to do to use it.
+- the *why* is crucial at most stages, but you should also highlight on what your project does in the first place.
+
+<blockquote>
+If people don’t know why your project exists, they won’t use it.  
+If people can’t figure out how to install your code, they won’t use it.  
+If people can’t figure out how to use your code, they won’t use it.
+</blockquote> 
+
+<div style="float: right; width: 30%;">
+<font size=5>([Quote from here](https://www.writethedocs.org/guide/writing/beginners-guide-to-docs/))</font>
+</div>
+
+<div class="notes">
+Ok, that's quite a few things. So what to focus on?
+
+It kind of depends on your goal. If you created something and want other people to use it, you might want to start documentation with a short description of what your project does and why it's good to use it (instead of potential other ones).
+
+If it's there so people can verify/replicate your work, they probably already know what it's supposed to do and why. They might be more interested in how and why (for verification) or usage (for replication).
+</div>
+
+# Data
+
+## Variables
+
+- use consistent naming. 
+
+- follow an existing convention if possible.
+
+- names short but self-explanatory if possible. E.g.:
+  - _poor_: variable `sector` taking values of "_public_" or "_private_"
+  - _better_: variable `private_sector` taking values of 0 and 1 ("no" and "yes")
+
+- use prefixes or suffixes but - again - consistently. E.g.:
+  - `wave1_wage`, `wave1_occupation`, `wave2_wage`, `wave2_occupation`
+
+- if software allows it - add labeling.
+
+<div class="notes">
+Refer to popular libraries, packages, articles, survey data, etc. (depends on the context) and check the existing names. Stick to a convention to make it easier for everyone.
+
+Names shouldn't be too long, but it's nice if they indicate well what a variable does. Avoid abbreviations that only you understand and only at the time of writing.
+</div>
+
+## Values
+
+- code the values consistently. E.g. always 0/1 or always 1/2 (not a mix).
+
+- if software allows it - add labeling.
+
+- ensure proper formatting (e.g. numeric vs string).
+
+When designing data collection try using established wording and definitions for questions (e.g. on education, occupation, labour market status, etc.).
+
+<div class="notes">
+Again, sticking to conventions helps. In this case it also allows to make comparisons between your data and other datasets (which is sometimes impossible if different wording and answer options were used).
+</div>
+
+
+## Data, files, encoding
+
+- come up with a structure for your files - don't just put them all in the same folder. Various approaches possible (e.g. [this one](https://coderefinery.github.io/reproducible-research/02-organizing-projects/), but consistency is key.
+
+- you can store raw files - these don't have to be as neat and might contain something you needed during the development stage (e.g. some exploration, statistics, graphs, etc.). Focus on the final ones.
+
+- avoid language-specific characters in names, labels, paths, etc. Use UTF-8 to minimise problems.
+
+- use file formats that can be accessed by other software, e.g. CSV.
+
+- try to avoid doing things by hand - try to automatise as much as possible.
+
+<div class="notes">
+If you want your process to be reproducible, you should avoid manual input. That's a part of the process that you cannot control when others do it. If unavoidable, include instructions.
+</div>
+
+
+# Code
+
+<a href="https://xkcd.com/1513/"> <img src="https://imgs.xkcd.com/comics/code_quality.png"></img></a>  
+<font size=3>source: xkcd (https://xkcd.com/1513/). Also check parts [2](https://xkcd.com/1695/) and [3](https://xkcd.com/1833/).</font>
+
+<div class="notes">
+Note: some of these 'rules' are academic research-specific, while others are more consistent with building some open source software, still others are more useful for when working with a team in a firm. 
+
+You should be able to judge which of those seem useful for your case.
+</div>
+
+## Variables, values, packages
+
+- define your variables (if possible) at the start.
+
+- set seeds in the code.
+
+- load additional stuff (libraries/packages) at the beginning.
+  - if using a custom-built package, make sure to include it.
+
+- use consistent syntax (e.g. stick to `<-` instead of `=`)
+
+## Use indentation
+
+- indentation is a good way of marking subsections of your code.
+  - common uses: function's body, after conditions, in loops, etc.
+
+- you can add other cases if it makes the code more readable, but be consistent.
+
+- some languages will partially force you with this (e.g. Python, YAML).
+ 
+## Use functions
+
+- if you repeat a set of operations at least several times (some say 3), turn it into a function instead.
+
+- note: functions should have one purpose each. (see: [Single responsibility principle](https://en.wikipedia.org/wiki/Single-responsibility_principle))
+
+- define your functions at the start or even in a separate file/package (that gets referred to).
+
+- the fewer arguments the better. 
+
+<div class="notes">
+Set default values for arguments to make functions easier to use. If a value can be calculated based on other values (that are always provided), do not include it as an argument, but calculate it within the function.
+</div>
+
+## Use loops
+
+- don't write multiple lines that do mostly the same and only switch one thing.
+
+- create loops to avoid repetition (over values, over elements in the list, etc.)
+
+## Paths and working directories
+
+- define your working directory at the very start.
+
+- if using more than one directory, define the paths and refer to them later on.
+
+- this will allow others to just customise this according to their needs at the start.
+
+<div class="notes">
+You can have some defaults (e.g. you can have a customisable general path or path that defaults to a specific folder). And you can then have defaults that refer to subfolder (e.g. "outputs", "figures", "processed data"). But other people using your work might already have some convention for such folders - it'd be best to allow them to easily adjust the code accordingly.
+</div>
+
+## Handling errors
+
+- if meant for use by others, try making your code fool-proof.
+
+- provide helpful error (or warning) notifications that help identify what went wrong.
+
+See `try` and `try catch` in R or Java (or `try` and `except` in Python) for ways to handle errors.
+
+<div class="notes">
+This might also be helpful for your own troubleshooting, when using the code. 
+</div>
+
+## Add comments
+
+- use comments a lot, but not too much.  
+- place them above or to the side (when referring to a specific line).
+
+Comments should:
+
+- provide brief info on 'what' **if not clear**.
+- provide additional info on 'why' **if not clear**.
+- explain how it's done **if not clear**.
+
+Pick one formatting style for your comments and be consistent.
+
+<div class="notes">
+As with many things, it might be worth it to show your code to another person and check whether they can understand - more or less - what is happening in the code using your comments for guidance.
+</div>
+
+## Avoid hardcoding
+
+- avoid using constants. 
+
+- if possible, calculate them on the go (e.g. find the number of rows, find the maximum, find the length of a list, calculate the distance, etc.). 
+
+- if not, define them at the start (allowing others to easily change those for the whole code if necessary).
+
+- in scraping, try to define general pathways, without referring to, e.g., numbers of elements (as those might change).
+
+<div class="notes">
+The goal is to make your code flexible. In the future it might be used for different datasets, or modified to consider different variables, methods, etc. This shouldn't prevent the code from executing properly.
+</div>
+
+## Clean your code and track changes
+
+- get rid of redundant stuff like variables/functions you don't use.
+
+- if you update your code, check if other pieces remain relevant.
+
+- don't forget to update your comments along with the code(!).
+
+- use version control and meaningful commits.
+
+## Automated code cleaning
+
+When pressed for time and need to clean your code, e.g.:
+
+R:
+
+ - [styleR](https://github.com/r-lib/styler)
+ - [formatR](https://github.com/yihui/formatR)
+ - [tidy = true option in RMarkdown](https://bookdown.org/yihui/rmarkdown-cookbook/opts-tidy.html)
+ 
+<div class="notes">
+There are pre-defined styles for code out there. You might check them out and use them, but the most important things are actually: clarity and consistency.
+</div>
+
+## Need some code examples of why this matters?
+
+Check these posts containing code samples:
+
+[6 simple tips on how to start writing clean code - Alex Devero](https://blog.alexdevero.com/6-simple-tips-writing-clean-code/)
+
+[10 ways to write cleaner code - Pluralsight](https://www.pluralsight.com/blog/software-development/10-ways-to-write-cleaner-code)
+
+[Clean, high quality code: a guide on how to become a better programme - Arash Arabi (Butterfly)](https://www.butterfly.com.au/blog/website-development/clean-high-quality-code-a-guide-on-how-to-become-a-better-programmer)
+
+[7 Tips To Write Clean And Better Code in 2020 - anuupadhyay (GeeksforGeeks)](https://www.geeksforgeeks.org/7-tips-to-write-clean-and-better-code-in-2020/)
+ 
+<div class="notes">
+These mostly reiterate the same stuff but contain some bad code vs good code comparisons.
+</div> 
+ 
+# Writing
+
+## A research article
+
+- make sure you explain what you did in a way that others can follow.
+
+- try reading it and deciding whether you'd be able to replay the process based on your text. 
+
+- if possible, take a break and return to the document after some time. Does it still seem clear?
+
+- you can also ask someone to read your text and check whether the process is understandable.
+
+<div class="notes">
+The reader should be able to understand and picture the whole process (even without looking into the code), or at least be provided with relevant references if they want more information.
+</div>
+
+## Versions and sources 
+
+- include a note on your software, system and library/packages versions.
+
+- if using a non-standard package, make sure to note where to acquire it (as well as when was it acquired by you).
+
+- if data was obtained from an external source, make sure to name it and specify when you accessed it.
+
+- combine documentation with versioning (e.g. README.md on GitHub) so it becomes a living document.
+
+## License
+
+- provide a software license (best if you pick an existing one).
+
+- things to consider:  
+  - do you want others to name you
+  - do you want others to make profit using your work
+  - do you want others to make their work open source
+
+- Most popular licenses: Apache, BSD, GPL, MIT. 
+
+For a short summary see [here](https://exygy.com/blog/which-license-should-i-use-mit-vs-apache-vs-gpl/) or [here](https://opensource.stackexchange.com/questions/217/what-are-the-essential-differences-between-the-bsd-and-mit-licences).
+
+For a more comprehensive list of choices [check Wikipedia](https://en.wikipedia.org/wiki/Comparison_of_free_and_open-source_software_licences).
+
+<div class="notes">
+Legal stuff might be important and crucial for who ends up using your code. Think carefully. Insisting on sharing the results with the same license might have its merits but it will also turn away firms who do not want to risk it.
+</div> 
+
+## Sections to consider in the documentation:
+
+- brief and clear: what and why.
+- installation and usage instructions.
+  - usage example might be helpful
+- describe functions, their properties and usage.
+- where to report issues.
+- how to contribute (e.g. do pull requests), and who contributed.
+- FAQ.
+- where to ask for support.
+
+Also of interest: [_"Readme-driven development"_](https://tom.preston-werner.com/2010/08/23/readme-driven-development.html).
+
+<div class="notes">
+Depending on your needs, you might want to pay special attention to how you start if you want your code to get out there and be used. 
+
+Here, again, the target audience and the type of your work are crucial.
+</div>
+
+## Exercise 4
+
+1) Take a look at the attached code document. It could use some cleaning. 
+
+2) Try using one of the mentioned R packages to do some initial cleaning first. 
+
+3) Make the code clearer by using a loop.
+
+4) Make the code clearer by using a function.
+
+5) Replace hardcoded parameters and values with something smarter.
+
+6) Commit -> Push
+
+7) Go to GitHub and create a Pull Request (or try [doing it using CLI](https://git-scm.com/docs/git-request-pull))
