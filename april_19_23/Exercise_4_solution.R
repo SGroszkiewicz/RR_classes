@@ -55,11 +55,9 @@ countries <- c("Belgium", "Spain", "Poland")
 
 # This will calculate worker totals in each of the chosen countries.
 for (i in 1:length(countries)) {
-  
   assign(paste0("total_", countries[i]), 0)
 
   for (j in 1:number_of_categories) {
-    
     assign(
       paste0("total_", countries[i]),
       get(paste0("total_", countries[i])) + get(paste0("isco", j))[[countries[i]]]
@@ -69,7 +67,6 @@ for (i in 1:length(countries)) {
 
 # Let's merge all these datasets. We'll need a column that stores the occupation categories:
 for (i in 1:number_of_categories) {
-  
   ISCO <- rep(i, nrow(get(paste0("isco", i))))
   assign(
     paste0("isco", i),
@@ -83,16 +80,15 @@ all_data <- lapply(ls(pattern = "isco"), get) %>% data.table::rbindlist()
 # We have 9 occupations and the same time range for each, so we an add the totals by
 # adding a vector that is 9 times the previously calculated totals
 for (i in 1:length(countries)) {
-  
-  all_data[[paste0("total_", countries[i])]] <- rep(get(paste0("total_", countries[i])),
-                                                    number_of_categories
-                                                    )
+  all_data[[paste0("total_", countries[i])]] <- rep(
+    get(paste0("total_", countries[i])),
+    number_of_categories
+  )
 }
 
 # And this will give us shares of each occupation among all workers in a period-country
 for (i in 1:length(countries)) {
-  
-  all_data[[paste0("share_", countries[i])]] <- 
+  all_data[[paste0("share_", countries[i])]] <-
     all_data[[countries[i]]] / all_data[[paste0("total_", countries[i])]]
 }
 
@@ -129,8 +125,7 @@ combined <- left_join(all_data, aggdata, by = c("ISCO" = "isco08_1dig"))
 
 task_items <- c("t_4A2a4", "t_4A2b2", "t_4A4a1")
 
-std_task_by_country <- function (combined, country, task_item) {
-  
+std_task_by_country <- function(combined, country, task_item) {
   temp_mean <- wtd.mean(combined[[task_item]], combined[[paste0("share_", country)]])
   temp_sd <- wtd.var(combined[[task_item]], combined[[paste0("share_", country)]]) %>% sqrt()
   combined[[paste0("std_", country, "_", task_item)]] <- (combined[[task_item]] - temp_mean) / temp_sd
@@ -140,7 +135,6 @@ std_task_by_country <- function (combined, country, task_item) {
 
 for (i in 1:length(countries)) {
   for (j in 1:length(task_items)) {
-    
     combined <- std_task_by_country(combined, countries[i], task_items[j])
   }
 }
@@ -150,7 +144,6 @@ for (i in 1:length(countries)) {
 
 # Therefore we create a similar function as before, but some changes were required
 std_NRCA_by_country <- function(combined, country) {
-  
   temp_mean <- wtd.mean(combined[[paste0(country, "_NRCA")]], combined[[paste0("share_", country)]])
   temp_sd <- wtd.var(combined[[paste0(country, "_NRCA")]], combined[[paste0("share_", country)]]) %>% sqrt()
   combined[[paste0("std_", country, "_NRCA")]] <- (combined[[paste0(country, "_NRCA")]] - temp_mean) / temp_sd
@@ -161,10 +154,9 @@ std_NRCA_by_country <- function(combined, country) {
 # Here, we're looking at non-routine cognitive analytical tasks, as defined
 # by David Autor and Darron Acemoglu:
 for (i in 1:length(countries)) {
-  
   combined[[paste0(countries[i], "_NRCA")]] <- rowSums(combined %>%
     select(paste0("std_", countries[i], "_", task_items)))
-  
+
   # And we standardise NRCA in a similar way.
   combined <- std_NRCA_by_country(combined, countries[i])
 }
@@ -172,14 +164,12 @@ for (i in 1:length(countries)) {
 # Finally, to track the changes over time, we have to calculate a country-level mean
 # Step 1: multiply the value by the share of such workers.
 for (i in 1:length(countries)) {
-
-    combined[[paste0("multip_", countries[i], "_NRCA")]] <-
+  combined[[paste0("multip_", countries[i], "_NRCA")]] <-
     combined[[paste0("std_", countries[i], "_NRCA")]] * combined[[paste0("share_", countries[i])]]
 }
 
 # Step 2: sum it up (it basically becomes another weighted mean)
 for (i in 1:length(countries)) {
-  
   assign(
     paste0("agg_", countries[i]),
     aggregate(combined[[paste0("multip_", countries[i], "_NRCA")]],
@@ -191,10 +181,8 @@ for (i in 1:length(countries)) {
 
 # We can plot it now!
 plot_by_country <- function(country) {
-  
   plot(get(paste0("agg_", country))$x, xaxt = "n", ylab = paste0("agg_", country))
   axis(1, at = seq(1, 40, 3), labels = agg_Poland$Group.1[seq(1, 40, 3)])
-  
 }
 
 plot_by_country("Poland")
@@ -211,4 +199,3 @@ plot_by_country("Belgium")
 # 4.A.3.a.3	Controlling Machines and Processes
 # 4.C.2.d.1.i	Spend Time Making Repetitive Motions
 # 4.C.3.d.3	Pace Determined by Speed of Equipment
-
